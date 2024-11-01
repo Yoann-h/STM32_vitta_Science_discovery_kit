@@ -1,0 +1,18 @@
+[submodule "modules/ws2813"]
+	path = modules/ws2813
+	url = https://github.com/Yoann-h/STM32_ws2813.git
+[submodule "modules/lcd16x2"]
+	path = modules/lcd16x2
+	url = https://github.com/Yoann-h/STM32_lcd16x2.git
+[submodule "modules/servo"]
+	path = modules/servo
+	url = https://github.com/Yoann-h/STM32_servo.git
+[submodule "modules/hcsr04"]
+	path = modules/hcsr04
+	url = https://github.com/Yoann-h/STM32_hcsr04.git
+[submodule "modules/buzzer"]
+	path = modules/buzzer
+	url = https://github.com/Yoann-h/STM32_buzzer.git
+[submodule "modules/ds1307"]
+	path = modules/ds1307
+	url = https://github.com/Yoann-h/STM32_ds1307.git
