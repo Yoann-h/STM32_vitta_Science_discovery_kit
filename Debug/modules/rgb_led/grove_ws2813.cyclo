@@ -1,0 +1,4 @@
+../modules/rgb_led/grove_ws2813.c:13:6:WS28i3Init	1
+../modules/rgb_led/grove_ws2813.c:18:6:WS28i3SetColor	9
+../modules/rgb_led/grove_ws2813.c:75:6:WS28i3SetColorval	3
+../modules/rgb_led/grove_ws2813.c:96:6:WS28i13Rainbow	5

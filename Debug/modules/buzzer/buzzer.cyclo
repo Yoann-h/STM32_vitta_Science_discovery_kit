@@ -1,0 +1,7 @@
+../modules/buzzer/buzzer.c:38:6:buzzerMNG_init	1
+../modules/buzzer/buzzer.c:48:6:buzzerMNG_start	1
+../modules/buzzer/buzzer.c:53:6:buzzerMNG_stop	1
+../modules/buzzer/buzzer.c:58:6:buzzerMNG_setfrequency	2
+../modules/buzzer/buzzer.c:80:6:buzzerMNG_playSong	8
+../modules/buzzer/buzzer.c:138:6:buzzerMNG_setTimeBaseFreq	1
+../modules/buzzer/buzzer.c:146:5:ipower	4

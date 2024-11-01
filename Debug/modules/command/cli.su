@@ -1,0 +1,9 @@
+../modules/command/cli.c:20:6:vCommandConsoleTask	32	static
+../modules/command/cli.c:119:19:cmd_ok	32	static
+../modules/command/cli.c:140:19:cmd_led	40	static
+../modules/command/cli.c:214:19:CmdServo	96	static
+../modules/command/cli.c:254:19:cmd_buzzer	56	static
+../modules/command/cli.c:314:19:CmdClock	120	static
+../modules/command/cli.c:386:19:prvTaskStatsCommand	32	static,ignoring_inline_asm
+../modules/command/cli.c:417:6:vRegisterCLICommands	8	static
+../modules/command/cli.c:427:6:HAL_UART_RxCpltCallback	16	static

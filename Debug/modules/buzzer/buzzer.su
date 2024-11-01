@@ -1,0 +1,7 @@
+../modules/buzzer/buzzer.c:38:6:buzzerMNG_init	24	static
+../modules/buzzer/buzzer.c:48:6:buzzerMNG_start	8	static
+../modules/buzzer/buzzer.c:53:6:buzzerMNG_stop	8	static
+../modules/buzzer/buzzer.c:58:6:buzzerMNG_setfrequency	24	static
+../modules/buzzer/buzzer.c:80:6:buzzerMNG_playSong	56	static
+../modules/buzzer/buzzer.c:138:6:buzzerMNG_setTimeBaseFreq	32	static
+../modules/buzzer/buzzer.c:146:5:ipower	24	static

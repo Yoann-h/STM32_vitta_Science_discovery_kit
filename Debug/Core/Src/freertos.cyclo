@@ -1,0 +1,5 @@
+../Core/Src/freertos.c:107:6:MX_FREERTOS_Init	1
+../Core/Src/freertos.c:161:6:StartDisplayTask	1
+../Core/Src/freertos.c:197:6:StartCommandTask	1
+../Core/Src/freertos.c:216:6:StartJukeboxTask	4
+../Core/Src/freertos.c:249:6:StartTest	1

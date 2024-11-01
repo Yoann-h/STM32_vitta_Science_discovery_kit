@@ -1,0 +1,10 @@
+../modules/lcd/grove_lcd.c:24:6:clear	1
+../modules/lcd/grove_lcd.c:29:6:home	1
+../modules/lcd/grove_lcd.c:34:6:setCursor	2
+../modules/lcd/grove_lcd.c:39:9:command	1
+../modules/lcd/grove_lcd.c:44:9:write	1
+../modules/lcd/grove_lcd.c:49:6:noDisplay	1
+../modules/lcd/grove_lcd.c:54:6:display	1
+../modules/lcd/grove_lcd.c:59:6:writeMsg	2
+../modules/lcd/grove_lcd.c:68:6:lcd_init	4
+../modules/lcd/grove_lcd.c:146:6:scanI2C	4
