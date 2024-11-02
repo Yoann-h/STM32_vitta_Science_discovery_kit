@@ -63,7 +63,7 @@ uint8_t strBuffer[40];
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-
+void buzzer_bip(ts_buzzer* buz);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -123,11 +123,28 @@ int main(void)
   lcd.u8lines = 2;
   lcd.u8dotsize=1;
   elcd16x2_init(&lcd);
+  sprintf((char*)strBuffer, "TEST LIGNE 1    ");
+  elcd16x2_writeMsg(&lcd, strBuffer, strlen(strBuffer), 0, LCD16x2_LINE1);
+  sprintf((char*)strBuffer, "TEST LIGNE 2    ");
+  elcd16x2_writeMsg(&lcd, strBuffer, strlen(strBuffer), 0, LCD16x2_LINE2);
+  HAL_Delay(10000);
   for(uint8_t i=0;i<100;i+=7)
   {
 	  elcd16x2_DispLoading(&lcd, i);
 	  HAL_Delay(1000);
   }
+
+  ts_servo servo;
+  servo_Init(&servo, &htim3, TIM_CHANNEL_2, 600,  2600, 0, 180 );
+  servo_TestAmp(&servo, 1000);
+
+  ts_hcsr04 ultrasonic_sensor;
+  hcsr04_init(&ultrasonic_sensor, &htim8, GPIO_PIN_10, GPIOA);
+  float hcsr04dist = hcsr04_getDistance(&ultrasonic_sensor);
+
+  ts_buzzer buzzer;
+  buzzer_eInit(&buzzer, &htim1, &htim5, TIM_CHANNEL_1);
+  buzzer_bip(&buzzer);
 
   /* USER CODE END 2 */
 
@@ -143,13 +160,47 @@ int main(void)
 //  int pwm_value=min_pwm;
 //  int step = 0;
   uint32_t Time_1Hz = HAL_GetTick();
+  uint32_t Time_5Hz = HAL_GetTick();
+  uint32_t Time_2Hz = HAL_GetTick();
   WS2813_eSetColor(&ledhandler,WS2813Off,0);
   uint8_t ledstate = 0;
+  float fservoAngle = 0;
+  uint8_t servodir = 0;
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	if(HAL_GetTick()-Time_2Hz>=500)
+	{
+		Time_2Hz = HAL_GetTick();
+		hcsr04dist = hcsr04_getDistance(&ultrasonic_sensor);
+		sprintf((char*)strBuffer, "dist:%3.1fcm     ",hcsr04dist);
+		elcd16x2_writeMsg(&lcd, strBuffer, strlen(strBuffer), 0, 0);
+	}
+	if(HAL_GetTick()-Time_5Hz>=200)
+	{
+		Time_5Hz = HAL_GetTick();
+		servo_SetAngle(&servo,fservoAngle);
+		if(servodir==0)
+		{
+			fservoAngle+=10;
+		}
+		else if(servodir==1)
+		{
+			fservoAngle-=10;
+		}
+		if(fservoAngle<=0)
+		{
+			servodir=0;
+			fservoAngle=0;
+		}
+		if(fservoAngle>=180)
+		{
+			servodir=1;
+			fservoAngle=180;
+		}
+	}
 	if(HAL_GetTick()-Time_1Hz>=1000)
 	{
 		Time_1Hz = HAL_GetTick();
@@ -221,6 +272,17 @@ void SystemClock_Config(void)
 int _write(int file, char *ptr, int len) {
   HAL_UART_Transmit(&huart2, (uint8_t *)ptr, len, HAL_MAX_DELAY);
   return len;
+}
+
+void buzzer_bip(ts_buzzer* buz)
+{
+	  buzzer_eStart(buz);
+	  buzzer_eSetfrequency(buz,110*9);
+	  HAL_Delay(200);
+	  buzzer_eSetfrequency(buz,123.47*9);
+	  HAL_Delay(200);
+	  buzzer_eSetfrequency(buz,0);
+	  buzzer_eStop(buz);
 }
 /* USER CODE END 4 */
 
