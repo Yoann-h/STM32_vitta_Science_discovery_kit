@@ -25,4 +25,10 @@ SUBDIRS := \
 Core/Src \
 Core/Startup \
 Drivers/STM32L4xx_HAL_Driver/Src \
+modules/buzzer \
+modules/ds1307 \
+modules/hcsr04 \
+modules/lcd16x2 \
+modules/servo \
+modules/ws2813 \
 

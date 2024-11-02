@@ -1,3 +1,0 @@
-../modules/analogic/analog_mng.c:6:6:init_analog_mng	16	static
-../modules/analogic/analog_mng.c:14:6:HAL_ADC_ConvCpltCallback	16	static
-../modules/analogic/analog_mng.c:20:9:getAnalogMeasure	40	static

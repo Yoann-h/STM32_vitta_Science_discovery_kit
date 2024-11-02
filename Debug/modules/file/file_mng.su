@@ -1,9 +1,0 @@
-../modules/file/file_mng.c:18:9:initFatfs	24	static
-../modules/file/file_mng.c:30:9:scan_files	80	static
-../modules/file/file_mng.c:64:5:copy_file	32	static
-../modules/file/file_mng.c:98:9:delete_file	592	static
-../modules/file/file_mng.c:113:9:read_file	24	static
-../modules/file/file_mng.c:142:9:create_directory	24	static
-../modules/file/file_mng.c:157:9:create_file	24	static
-../modules/file/file_mng.c:175:9:edit_file	32	static
-../modules/file/file_mng.c:212:5:fileMngTest	80	static

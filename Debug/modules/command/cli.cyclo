@@ -1,9 +1,0 @@
-../modules/command/cli.c:20:6:vCommandConsoleTask	10
-../modules/command/cli.c:119:19:cmd_ok	1
-../modules/command/cli.c:140:19:cmd_led	9
-../modules/command/cli.c:214:19:CmdServo	2
-../modules/command/cli.c:254:19:cmd_buzzer	4
-../modules/command/cli.c:314:19:CmdClock	1
-../modules/command/cli.c:386:19:prvTaskStatsCommand	2
-../modules/command/cli.c:417:6:vRegisterCLICommands	1
-../modules/command/cli.c:427:6:HAL_UART_RxCpltCallback	1

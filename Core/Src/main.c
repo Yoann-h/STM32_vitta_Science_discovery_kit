@@ -30,7 +30,12 @@
 /* USER CODE BEGIN Includes */
 #include <string.h>
 #include <stdio.h>
-
+#include "buzzer.h"
+#include "ds1307.h"
+#include "lcd16x2.h"
+#include "hcsr04.h"
+#include "servo.h"
+#include "ws2813.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -106,6 +111,23 @@ int main(void)
   MX_TIM5_Init();
   MX_SPI3_Init();
   /* USER CODE BEGIN 2 */
+  WS2813_HandlerTypeDef ledhandler;
+  uint32_t ledBuffer[WS2813_DMA_BUFFER_SIZE];
+  WS2813_eInit(&ledhandler, &htim2, ledBuffer);
+  WS2813_eSetColor(&ledhandler,WS2813Orange,0);
+
+  ts_lcd16x2 lcd;
+  lcd.hi2c = &hi2c1;
+  lcd.u8adress = LCD16x2_ADDRESS;
+  lcd.u8col = 16;
+  lcd.u8lines = 2;
+  lcd.u8dotsize=1;
+  elcd16x2_init(&lcd);
+  for(uint8_t i=0;i<100;i+=7)
+  {
+	  elcd16x2_DispLoading(&lcd, i);
+	  HAL_Delay(1000);
+  }
 
   /* USER CODE END 2 */
 
@@ -120,11 +142,28 @@ int main(void)
 //  int max_pwm=2600; //us
 //  int pwm_value=min_pwm;
 //  int step = 0;
+  uint32_t Time_1Hz = HAL_GetTick();
+  WS2813_eSetColor(&ledhandler,WS2813Off,0);
+  uint8_t ledstate = 0;
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	if(HAL_GetTick()-Time_1Hz>=1000)
+	{
+		Time_1Hz = HAL_GetTick();
+		if(ledstate==0)
+		{
+			WS2813_eSetColor(&ledhandler,WS2813Green,0);
+			ledstate = 1;
+		}
+		else if(ledstate==1)
+		{
+			WS2813_eSetColor(&ledhandler,WS2813Off,0);
+			ledstate = 0;
+		}
+	}
   }
   /* USER CODE END 3 */
 }

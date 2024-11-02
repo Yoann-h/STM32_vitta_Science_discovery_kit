@@ -1,5 +1,5 @@
-../modules/servo/servo.c:18:6:servoMng_Init	3
-../modules/servo/servo.c:34:6:servoMng_Set	4
-../modules/servo/servo.c:58:6:servoMng_get	1
-../modules/servo/servo.c:63:6:servoMng_TestAmp	2
-../modules/servo/servo.c:73:6:servoMng_SetAngle	4
+../modules/servo/servo.c:13:14:servo_Init	7
+../modules/servo/servo.c:57:14:servo_Set	4
+../modules/servo/servo.c:87:14:servo_TestAmp	3
+../modules/servo/servo.c:106:14:servo_SetAngle	4
+../modules/servo/servo.c:133:10:servo_PCLKxTIM	8

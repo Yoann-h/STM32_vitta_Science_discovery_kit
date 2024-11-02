@@ -1,5 +1,5 @@
 modules/buzzer/buzzer.o: ../modules/buzzer/buzzer.c \
- ../modules/buzzer/buzzer.h \
+ ../modules/buzzer/buzzer.h ../modules/buzzer/buzzer_cfg.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h \
  ../Core/Inc/stm32l4xx_hal_conf.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h \
@@ -34,8 +34,15 @@ modules/buzzer/buzzer.o: ../modules/buzzer/buzzer.c \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h \
- ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h
+ ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h \
+ ../modules/buzzer/scores/scores.h \
+ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/buzzer_cfg.h \
+ ../modules/buzzer/scores/score_mario.h \
+ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/buzzer.h \
+ ../modules/buzzer/scores/score_zelda.h \
+ ../modules/buzzer/scores/score_pokemon.h
 ../modules/buzzer/buzzer.h:
+../modules/buzzer/buzzer_cfg.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h:
@@ -71,3 +78,9 @@ modules/buzzer/buzzer.o: ../modules/buzzer/buzzer.c \
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h:
+../modules/buzzer/scores/scores.h:
+C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/buzzer_cfg.h:
+../modules/buzzer/scores/score_mario.h:
+C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/buzzer.h:
+../modules/buzzer/scores/score_zelda.h:
+../modules/buzzer/scores/score_pokemon.h:
