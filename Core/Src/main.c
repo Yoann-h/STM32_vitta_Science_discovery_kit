@@ -146,6 +146,8 @@ int main(void)
   buzzer_eInit(&buzzer, &htim1, &htim5, TIM_CHANNEL_1);
   buzzer_bip(&buzzer);
 
+  DS1307Init(&hi2c1);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -175,8 +177,6 @@ int main(void)
 	{
 		Time_2Hz = HAL_GetTick();
 		hcsr04dist = hcsr04_getDistance(&ultrasonic_sensor);
-		sprintf((char*)strBuffer, "dist:%3.1fcm     ",hcsr04dist);
-		elcd16x2_writeMsg(&lcd, strBuffer, strlen(strBuffer), 0, 0);
 	}
 	if(HAL_GetTick()-Time_5Hz>=200)
 	{
@@ -214,6 +214,11 @@ int main(void)
 			WS2813_eSetColor(&ledhandler,WS2813Off,0);
 			ledstate = 0;
 		}
+		char datef[20];
+		dateFormat("dmy  H:i:s", getDateTime(), datef);
+		sprintf((char*)strBuffer, "dist:%3.1fcm     ",hcsr04dist);
+		elcd16x2_writeMsg(&lcd, strBuffer, strlen(strBuffer), 0, LCD16x2_LINE1);
+		elcd16x2_writeMsg(&lcd, datef, strlen(datef), 0, LCD16x2_LINE2);
 	}
   }
   /* USER CODE END 3 */
