@@ -34,6 +34,17 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
+ ../Core/Inc/FreeRTOSConfig.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h \
  ../Core/Inc/adc.h ../Core/Inc/main.h ../Core/Inc/dma.h ../Core/Inc/i2c.h \
  ../Core/Inc/spi.h ../Core/Inc/tim.h ../Core/Inc/usart.h \
  ../Core/Inc/gpio.h \
@@ -47,7 +58,16 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/servo/servo.h \
  C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/servo/servo_cfg.h \
  C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/ws2813/ws2813.h \
- C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/ws2813/ws2813_cfg.h
+ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/ws2813/ws2813_cfg.h \
+ ../Core/Inc/cli.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h \
+ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/FreeRTOS-CLI/FreeRTOS_CLI.h \
+ ../Core/Inc/usart.h \
+ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/scores/scores.h \
+ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/buzzer_cfg.h \
+ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/scores/score_mario.h \
+ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/scores/score_zelda.h \
+ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/scores/score_pokemon.h
 ../Core/Inc/main.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
@@ -84,6 +104,17 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h:
+../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
+../Core/Inc/FreeRTOSConfig.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h:
+../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
+../Middlewares/Third_Party/FreeRTOS/Source/include/list.h:
+../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h:
 ../Core/Inc/adc.h:
 ../Core/Inc/main.h:
 ../Core/Inc/dma.h:
@@ -103,3 +134,12 @@ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/servo/s
 C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/servo/servo_cfg.h:
 C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/ws2813/ws2813.h:
 C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/ws2813/ws2813_cfg.h:
+../Core/Inc/cli.h:
+../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h:
+C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/FreeRTOS-CLI/FreeRTOS_CLI.h:
+../Core/Inc/usart.h:
+C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/scores/scores.h:
+C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/buzzer_cfg.h:
+C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/scores/score_mario.h:
+C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/scores/score_zelda.h:
+C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/scores/score_pokemon.h:

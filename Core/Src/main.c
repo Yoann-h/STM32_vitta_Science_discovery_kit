@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os.h"
 #include "adc.h"
 #include "dma.h"
 #include "i2c.h"
@@ -36,6 +37,7 @@
 #include "hcsr04.h"
 #include "servo.h"
 #include "ws2813.h"
+#include "cli.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -57,11 +59,14 @@
 
 /* USER CODE BEGIN PV */
 uint8_t strBuffer[40];
-
+extern WS2813_HandlerTypeDef ledhandler;
+extern ts_buzzer buzzer;
+extern ts_servo servo;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
 void buzzer_bip(ts_buzzer* buz);
 /* USER CODE END PFP */
@@ -111,7 +116,7 @@ int main(void)
   MX_TIM5_Init();
   MX_SPI3_Init();
   /* USER CODE BEGIN 2 */
-  WS2813_HandlerTypeDef ledhandler;
+
   uint32_t ledBuffer[WS2813_DMA_BUFFER_SIZE];
   WS2813_eInit(&ledhandler, &htim2, ledBuffer);
   WS2813_eSetColor(&ledhandler,WS2813Orange,0);
@@ -123,32 +128,43 @@ int main(void)
   lcd.u8lines = 2;
   lcd.u8dotsize=1;
   elcd16x2_init(&lcd);
-  sprintf((char*)strBuffer, "TEST LIGNE 1    ");
-  elcd16x2_writeMsg(&lcd, strBuffer, strlen(strBuffer), 0, LCD16x2_LINE1);
-  sprintf((char*)strBuffer, "TEST LIGNE 2    ");
-  elcd16x2_writeMsg(&lcd, strBuffer, strlen(strBuffer), 0, LCD16x2_LINE2);
-  HAL_Delay(10000);
-  for(uint8_t i=0;i<100;i+=7)
-  {
-	  elcd16x2_DispLoading(&lcd, i);
-	  HAL_Delay(1000);
-  }
+  //sprintf((char*)strBuffer, "TEST LIGNE 1    ");
+  //elcd16x2_writeMsg(&lcd, strBuffer, strlen(strBuffer), 0, LCD16x2_LINE1);
+  //sprintf((char*)strBuffer, "TEST LIGNE 2    ");
+  //elcd16x2_writeMsg(&lcd, strBuffer, strlen(strBuffer), 0, LCD16x2_LINE2);
+  //HAL_Delay(10000);
+  //for(uint8_t i=0;i<100;i+=7)
+  //{	  elcd16x2_DispLoading(&lcd, i);
+  //	  HAL_Delay(1000);
+  //}
 
-  ts_servo servo;
+
   servo_Init(&servo, &htim3, TIM_CHANNEL_2, 600,  2600, 0, 180 );
-  servo_TestAmp(&servo, 1000);
+  //servo_TestAmp(&servo, 1000);
 
   ts_hcsr04 ultrasonic_sensor;
   hcsr04_init(&ultrasonic_sensor, &htim8, GPIO_PIN_10, GPIOA);
-  float hcsr04dist = hcsr04_getDistance(&ultrasonic_sensor);
+  //float hcsr04dist = hcsr04_getDistance(&ultrasonic_sensor);
 
-  ts_buzzer buzzer;
+
   buzzer_eInit(&buzzer, &htim1, &htim5, TIM_CHANNEL_1);
-  buzzer_bip(&buzzer);
+  //buzzer_bip(&buzzer);
+  //buzzer_vDemoTask(&buzzer);
 
   DS1307Init(&hi2c1);
 
   /* USER CODE END 2 */
+
+  /* Init scheduler */
+  osKernelInitialize();
+
+  /* Call init function for freertos objects (in cmsis_os2.c) */
+  MX_FREERTOS_Init();
+
+  /* Start scheduler */
+  osKernelStart();
+
+  /* We should never get here as control is now taken by the scheduler */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
@@ -173,53 +189,53 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	if(HAL_GetTick()-Time_2Hz>=500)
-	{
-		Time_2Hz = HAL_GetTick();
-		hcsr04dist = hcsr04_getDistance(&ultrasonic_sensor);
-	}
-	if(HAL_GetTick()-Time_5Hz>=200)
-	{
-		Time_5Hz = HAL_GetTick();
-		servo_SetAngle(&servo,fservoAngle);
-		if(servodir==0)
-		{
-			fservoAngle+=10;
-		}
-		else if(servodir==1)
-		{
-			fservoAngle-=10;
-		}
-		if(fservoAngle<=0)
-		{
-			servodir=0;
-			fservoAngle=0;
-		}
-		if(fservoAngle>=180)
-		{
-			servodir=1;
-			fservoAngle=180;
-		}
-	}
-	if(HAL_GetTick()-Time_1Hz>=1000)
-	{
-		Time_1Hz = HAL_GetTick();
-		if(ledstate==0)
-		{
-			WS2813_eSetColor(&ledhandler,WS2813Green,0);
-			ledstate = 1;
-		}
-		else if(ledstate==1)
-		{
-			WS2813_eSetColor(&ledhandler,WS2813Off,0);
-			ledstate = 0;
-		}
-		char datef[20];
-		dateFormat("dmy  H:i:s", getDateTime(), datef);
-		sprintf((char*)strBuffer, "dist:%3.1fcm     ",hcsr04dist);
-		elcd16x2_writeMsg(&lcd, strBuffer, strlen(strBuffer), 0, LCD16x2_LINE1);
-		elcd16x2_writeMsg(&lcd, datef, strlen(datef), 0, LCD16x2_LINE2);
-	}
+//	if(HAL_GetTick()-Time_2Hz>=500)
+//	{
+//		Time_2Hz = HAL_GetTick();
+//		hcsr04dist = hcsr04_getDistance(&ultrasonic_sensor);
+//	}
+//	if(HAL_GetTick()-Time_5Hz>=200)
+//	{
+//		Time_5Hz = HAL_GetTick();
+//		servo_SetAngle(&servo,fservoAngle);
+//		if(servodir==0)
+//		{
+//			fservoAngle+=10;
+//		}
+//		else if(servodir==1)
+//		{
+//			fservoAngle-=10;
+//		}
+//		if(fservoAngle<=0)
+//		{
+//			servodir=0;
+//			fservoAngle=0;
+//		}
+//		if(fservoAngle>=180)
+//		{
+//			servodir=1;
+//			fservoAngle=180;
+//		}
+//	}
+//	if(HAL_GetTick()-Time_1Hz>=1000)
+//	{
+//		Time_1Hz = HAL_GetTick();
+//		if(ledstate==0)
+//		{
+//			WS2813_eSetColor(&ledhandler,WS2813Green,0);
+//			ledstate = 1;
+//		}
+//		else if(ledstate==1)
+//		{
+//			WS2813_eSetColor(&ledhandler,WS2813Off,0);
+//			ledstate = 0;
+//		}
+//		char datef[20];
+//		dateFormat("dmy  H:i:s", getDateTime(), datef);
+//		sprintf((char*)strBuffer, "dist:%3.1fcm     ",hcsr04dist);
+//		elcd16x2_writeMsg(&lcd, strBuffer, strlen(strBuffer), 0, LCD16x2_LINE1);
+//		elcd16x2_writeMsg(&lcd, datef, strlen(datef), 0, LCD16x2_LINE2);
+//	}
   }
   /* USER CODE END 3 */
 }
@@ -302,7 +318,10 @@ void buzzer_bip(ts_buzzer* buz)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
-
+	  if (htim == &htim5 )
+	  {
+		 buzzer.u8BuzzerTbFlag = 1;
+	  }
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM4) {
     HAL_IncTick();

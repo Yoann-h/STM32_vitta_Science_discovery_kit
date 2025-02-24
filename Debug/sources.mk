@@ -25,6 +25,11 @@ SUBDIRS := \
 Core/Src \
 Core/Startup \
 Drivers/STM32L4xx_HAL_Driver/Src \
+FreeRTOS-CLI \
+Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 \
+Middlewares/Third_Party/FreeRTOS/Source \
+Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F \
+Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang \
 modules/buzzer \
 modules/ds1307 \
 modules/hcsr04 \
