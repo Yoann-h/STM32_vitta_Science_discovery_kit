@@ -34,7 +34,7 @@
 #include "buzzer.h"
 #include "ds1307.h"
 #include "lcd16x2.h"
-#include "hcsr04.h"
+
 #include "servo.h"
 #include "ws2813.h"
 #include "cli.h"
@@ -58,8 +58,9 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t strBuffer[40];
+//uint8_t strBuffer[40];
 extern WS2813_HandlerTypeDef ledhandler;
+uint32_t ledBuffer[WS2813_DMA_BUFFER_SIZE];
 extern ts_buzzer buzzer;
 extern ts_servo servo;
 /* USER CODE END PV */
@@ -117,17 +118,17 @@ int main(void)
   MX_SPI3_Init();
   /* USER CODE BEGIN 2 */
 
-  uint32_t ledBuffer[WS2813_DMA_BUFFER_SIZE];
-  WS2813_eInit(&ledhandler, &htim2, ledBuffer);
-  WS2813_eSetColor(&ledhandler,WS2813Orange,0);
 
-  ts_lcd16x2 lcd;
-  lcd.hi2c = &hi2c1;
-  lcd.u8adress = LCD16x2_ADDRESS;
-  lcd.u8col = 16;
-  lcd.u8lines = 2;
-  lcd.u8dotsize=1;
-  elcd16x2_init(&lcd);
+  WS2813_eInit(&ledhandler, &htim2, ledBuffer);
+  //WS2813_eSetColor(&ledhandler,WS2813Orange,0);
+
+//  ts_lcd16x2 lcd;
+//  lcd.hi2c = &hi2c1;
+//  lcd.u8adress = LCD16x2_ADDRESS;
+//  lcd.u8col = 16;
+//  lcd.u8lines = 2;
+//  lcd.u8dotsize=1;
+//  elcd16x2_init(&lcd);
   //sprintf((char*)strBuffer, "TEST LIGNE 1    ");
   //elcd16x2_writeMsg(&lcd, strBuffer, strlen(strBuffer), 0, LCD16x2_LINE1);
   //sprintf((char*)strBuffer, "TEST LIGNE 2    ");
@@ -142,9 +143,7 @@ int main(void)
   servo_Init(&servo, &htim3, TIM_CHANNEL_2, 600,  2600, 0, 180 );
   //servo_TestAmp(&servo, 1000);
 
-  ts_hcsr04 ultrasonic_sensor;
-  hcsr04_init(&ultrasonic_sensor, &htim8, GPIO_PIN_10, GPIOA);
-  //float hcsr04dist = hcsr04_getDistance(&ultrasonic_sensor);
+
 
 
   buzzer_eInit(&buzzer, &htim1, &htim5, TIM_CHANNEL_1);
@@ -177,13 +176,13 @@ int main(void)
 //  int max_pwm=2600; //us
 //  int pwm_value=min_pwm;
 //  int step = 0;
-  uint32_t Time_1Hz = HAL_GetTick();
-  uint32_t Time_5Hz = HAL_GetTick();
-  uint32_t Time_2Hz = HAL_GetTick();
-  WS2813_eSetColor(&ledhandler,WS2813Off,0);
-  uint8_t ledstate = 0;
-  float fservoAngle = 0;
-  uint8_t servodir = 0;
+//  uint32_t Time_1Hz = HAL_GetTick();
+//  uint32_t Time_5Hz = HAL_GetTick();
+//  uint32_t Time_2Hz = HAL_GetTick();
+//  uint8_t ledstate = 0;
+//  float fservoAngle = 0;
+//  uint8_t servodir = 0;
+//  float hcsr04dist= 0;
   while (1)
   {
     /* USER CODE END WHILE */

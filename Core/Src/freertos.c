@@ -26,6 +26,11 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "scores/scores.h"
+#include "lcd16x2.h"
+#include "i2c.h"
+#include "hcsr04.h"
+#include "tim.h"
+#include "ds1307.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -45,27 +50,27 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-
+ts_lcd16x2 lcd;
 /* USER CODE END Variables */
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
   .name = "defaultTask",
-  .stack_size = 128 * 4,
+  .stack_size = 1024 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for JukeboxTask */
 osThreadId_t JukeboxTaskHandle;
 const osThreadAttr_t JukeboxTask_attributes = {
   .name = "JukeboxTask",
-  .stack_size = 256 * 4,
+  .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityLow,
 };
 /* Definitions for CommandTask */
 osThreadId_t CommandTaskHandle;
 const osThreadAttr_t CommandTask_attributes = {
   .name = "CommandTask",
-  .stack_size = 256 * 4,
+  .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityLow,
 };
 /* Definitions for I2CMutex */
@@ -161,9 +166,48 @@ void MX_FREERTOS_Init(void) {
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN StartDefaultTask */
+	uint8_t strBuffer[40];
+	char datef[20];
+	  ts_hcsr04 ultrasonic_sensor;
+	  hcsr04_init(&ultrasonic_sensor, &htim8, GPIO_PIN_10, GPIOA);
+	  //float hcsr04dist = hcsr04_getDistance(&ultrasonic_sensor);
+
+	  lcd.hi2c = &hi2c1;
+	  lcd.u8adress = LCD16x2_ADDRESS;
+	  lcd.u8col = 16;
+	  lcd.u8lines = 2;
+	  lcd.u8dotsize=1;
+	  osMutexAcquire(I2CMutexHandle, 1000);
+	  elcd16x2_init(&lcd);
+	  osMutexRelease(I2CMutexHandle);
+	  uint32_t Time_1Hz = HAL_GetTick();
+	  //uint32_t Time_5Hz = HAL_GetTick();
+	  uint32_t Time_2Hz = HAL_GetTick();
+	  //uint8_t ledstate = 0;
+	  //float fservoAngle = 0;
+	  //uint8_t servodir = 0;
+	  float hcsr04dist= 0;
   /* Infinite loop */
   for(;;)
   {
+		if(HAL_GetTick()-Time_2Hz>=500)
+		{
+			Time_2Hz = HAL_GetTick();
+			hcsr04dist = hcsr04_getDistance(&ultrasonic_sensor);
+		}
+		if(HAL_GetTick()-Time_1Hz>=1000)
+		{
+			Time_1Hz = HAL_GetTick();
+
+			osMutexAcquire(I2CMutexHandle, 100);
+			dateFormat("dmy  H:i:s", getDateTime(), datef);
+			osDelay(10);
+			sprintf((char*)strBuffer, "dist:%3.1fcm     ",hcsr04dist);
+			elcd16x2_writeMsg(&lcd, strBuffer, strlen(strBuffer), 0, LCD16x2_LINE1);
+			osDelay(10);
+			elcd16x2_writeMsg(&lcd, datef, strlen(datef), 0, LCD16x2_LINE2);
+			osMutexRelease(I2CMutexHandle);
+		}
     osDelay(1);
   }
   /* USER CODE END StartDefaultTask */

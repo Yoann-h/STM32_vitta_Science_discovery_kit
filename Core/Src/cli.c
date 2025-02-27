@@ -9,7 +9,7 @@
 //inspired from https://www.edwinfairchild.com/p/making-freertos-cli-more-cli-ish-minor.html
 
 #define MAX_INPUT_LENGTH 50
-#define MAX_OUTPUT_LENGTH 100
+#define MAX_OUTPUT_LENGTH 512
 
 /* CLI escape sequences*/
 uint8_t backspace[] = "\x08 \x08";

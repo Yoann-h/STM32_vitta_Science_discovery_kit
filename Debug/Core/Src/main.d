@@ -53,8 +53,6 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/ds1307/ds1307.h \
  C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/lcd16x2/lcd16x2.h \
  C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/lcd16x2/lcd16x2_cfg.h \
- C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/hcsr04/hcsr04.h \
- C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/hcsr04/hcsr04_cfg.h \
  C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/servo/servo.h \
  C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/servo/servo_cfg.h \
  C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/ws2813/ws2813.h \
@@ -128,8 +126,6 @@ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/
 C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/ds1307/ds1307.h:
 C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/lcd16x2/lcd16x2.h:
 C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/lcd16x2/lcd16x2_cfg.h:
-C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/hcsr04/hcsr04.h:
-C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/hcsr04/hcsr04_cfg.h:
 C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/servo/servo.h:
 C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/servo/servo_cfg.h:
 C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/ws2813/ws2813.h:
