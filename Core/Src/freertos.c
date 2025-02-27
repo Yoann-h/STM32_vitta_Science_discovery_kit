@@ -73,6 +73,13 @@ const osThreadAttr_t CommandTask_attributes = {
   .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityLow,
 };
+/* Definitions for LedTask */
+osThreadId_t LedTaskHandle;
+const osThreadAttr_t LedTask_attributes = {
+  .name = "LedTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityLow,
+};
 /* Definitions for I2CMutex */
 osMutexId_t I2CMutexHandle;
 const osMutexAttr_t I2CMutex_attributes = {
@@ -87,6 +94,7 @@ const osMutexAttr_t I2CMutex_attributes = {
 void StartDefaultTask(void *argument);
 void StartJukeboxTask(void *argument);
 void StartCommandTask(void *argument);
+void StartLedTask(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -145,6 +153,9 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of CommandTask */
   CommandTaskHandle = osThreadNew(StartCommandTask, NULL, &CommandTask_attributes);
+
+  /* creation of LedTask */
+  LedTaskHandle = osThreadNew(StartLedTask, NULL, &LedTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -249,6 +260,25 @@ void StartCommandTask(void *argument)
     osDelay(1);
   }
   /* USER CODE END StartCommandTask */
+}
+
+/* USER CODE BEGIN Header_StartLedTask */
+/**
+* @brief Function implementing the LedTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartLedTask */
+void StartLedTask(void *argument)
+{
+  /* USER CODE BEGIN StartLedTask */
+	WS2813_eProcess();
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END StartLedTask */
 }
 
 /* Private application code --------------------------------------------------*/

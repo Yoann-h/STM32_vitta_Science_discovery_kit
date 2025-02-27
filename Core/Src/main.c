@@ -59,10 +59,10 @@
 
 /* USER CODE BEGIN PV */
 //uint8_t strBuffer[40];
-extern WS2813_HandlerTypeDef ledhandler;
 uint32_t ledBuffer[WS2813_DMA_BUFFER_SIZE];
 extern ts_buzzer buzzer;
 extern ts_servo servo;
+extern WS2813_HandlerTypeDef ledhandler;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/

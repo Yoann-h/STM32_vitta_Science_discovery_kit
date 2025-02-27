@@ -17,6 +17,7 @@ uint8_t cRxedChar = 0x00;
 extern uint8_t song;
 extern WS2813_HandlerTypeDef ledhandler;
 extern ts_servo servo;
+extern uint8_t u8WS2813_iCommand;
 
 void vCommandConsoleTask(void *pvParameters)
 {
@@ -156,43 +157,57 @@ static BaseType_t cmd_led(int8_t *pcWriteBuffer, size_t xWriteBufferLen, const i
 	pcParameter1[ xParameter1StringLength ] = 0x00;
 	if(strcmp(pcParameter1, "red")==0)
 	{
-		WS2813_eSetColor(&ledhandler,WS2813Red,0);
+		//WS2813_eSetColor(&ledhandler,WS2813Red,0);
+		u8WS2813_iCommand = WS2813Red;
 		strcat(pcWriteBuffer, ">>led RED\r\n");
 	}
 	else if (strcmp(pcParameter1, "blue")==0)
 	{
-		WS2813_eSetColor(&ledhandler,WS2813Blue,0);
+		//WS2813_eSetColor(&ledhandler,WS2813Blue,0);
+		u8WS2813_iCommand = WS2813Blue;
 		strcat(pcWriteBuffer, ">>led BLUE\r\n");
 	}
 	else if (strcmp(pcParameter1, "green")==0)
 	{
-		WS2813_eSetColor(&ledhandler,WS2813Green,0);
+		//WS2813_eSetColor(&ledhandler,WS2813Green,0);
+		u8WS2813_iCommand = WS2813Green;
 		strcat(pcWriteBuffer, ">>led GREEN\r\n");
 	}
 	else if (strcmp(pcParameter1, "cyan")==0)
 	{
-		WS2813_eSetColor(&ledhandler,WS2813Cyan,0);
+		//WS2813_eSetColor(&ledhandler,WS2813Cyan,0);
+		u8WS2813_iCommand = WS2813Cyan;
 		strcat(pcWriteBuffer, ">>led CYAN\r\n");
 	}
 	else if (strcmp(pcParameter1, "purple")==0)
 	{
-		WS2813_eSetColor(&ledhandler,WS2813Purple,0);
+		//WS2813_eSetColor(&ledhandler,WS2813Purple,0);
+		u8WS2813_iCommand = WS2813Purple;
 		strcat(pcWriteBuffer, ">>led PURPLE\r\n");
 	}
 	else if (strcmp(pcParameter1, "yellow")==0)
 	{
-		WS2813_eSetColor(&ledhandler,WS2813Yellow,0);
+		//WS2813_eSetColor(&ledhandler,WS2813Yellow,0);
+		u8WS2813_iCommand = WS2813Yellow;
 		strcat(pcWriteBuffer, ">>led YELLOW\r\n");
 	}
 	else if (strcmp(pcParameter1, "orange")==0)
 	{
-		WS2813_eSetColor(&ledhandler,WS2813Orange,0);
+		//WS2813_eSetColor(&ledhandler,WS2813Orange,0);
+		u8WS2813_iCommand = WS2813Orange;
 		strcat(pcWriteBuffer, ">>led ORANGE\r\n");
 	}
 	else if (strcmp(pcParameter1, "off")==0)
 	{
-		WS2813_eSetColor(&ledhandler,WS2813Off,0);
+		//WS2813_eSetColor(&ledhandler,WS2813Off,0);
+		u8WS2813_iCommand = WS2813Off;
 		strcat(pcWriteBuffer, ">>led OFF\r\n");
+	}
+	else if (strcmp(pcParameter1, "rainbow")==0)
+	{
+		//WS2813_eSetColor(&ledhandler,WS2813Off,0);
+		u8WS2813_iCommand = WS2813Rainbow;
+		strcat(pcWriteBuffer, ">>led Rainbow\r\n");
 	}
 	else
 	{
