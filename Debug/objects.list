@@ -51,6 +51,7 @@
 "./Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o"
 "./modules/buzzer/buzzer.o"
 "./modules/ds1307/DS1307.o"
+"./modules/ds1307/local_time_manager.o"
 "./modules/hcsr04/hcsr04.o"
 "./modules/lcd16x2/lcd16x2.o"
 "./modules/servo/servo.o"

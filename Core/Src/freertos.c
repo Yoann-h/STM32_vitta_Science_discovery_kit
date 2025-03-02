@@ -31,6 +31,7 @@
 #include "hcsr04.h"
 #include "tim.h"
 #include "ds1307.h"
+#include "local_time_manager.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -51,6 +52,7 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
 ts_lcd16x2 lcd;
+extern ts_ltm LocalTime;
 /* USER CODE END Variables */
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
@@ -193,11 +195,9 @@ void StartDefaultTask(void *argument)
 	  osMutexRelease(I2CMutexHandle);
 	  uint32_t Time_1Hz = HAL_GetTick();
 	  //uint32_t Time_5Hz = HAL_GetTick();
-	  uint32_t Time_2Hz = HAL_GetTick();
-	  //uint8_t ledstate = 0;
-	  //float fservoAngle = 0;
-	  //uint8_t servodir = 0;
+	  uint32_t Time_2Hz = Time_1Hz;
 	  float hcsr04dist= 0;
+	  LtmRefLocalTime();
   /* Infinite loop */
   for(;;)
   {
@@ -210,12 +210,13 @@ void StartDefaultTask(void *argument)
 		{
 			Time_1Hz = HAL_GetTick();
 
-			osMutexAcquire(I2CMutexHandle, 100);
-			dateFormat("dmy  H:i:s", getDateTime(), datef);
-			osDelay(10);
+
+			sRTCDateTime dt;
+			ltm_UnixToDateTime(LocalTime.u32LocalTime, &dt);
+			dateFormat("dmy  H:i:s", dt, datef);
 			sprintf((char*)strBuffer, "dist:%3.1fcm     ",hcsr04dist);
+			osMutexAcquire(I2CMutexHandle, 100);
 			elcd16x2_writeMsg(&lcd, strBuffer, strlen(strBuffer), 0, LCD16x2_LINE1);
-			osDelay(10);
 			elcd16x2_writeMsg(&lcd, datef, strlen(datef), 0, LCD16x2_LINE2);
 			osMutexRelease(I2CMutexHandle);
 		}

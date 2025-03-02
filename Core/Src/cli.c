@@ -384,6 +384,7 @@ static BaseType_t CmdClock( char *pcWriteBuffer, size_t xWriteBufferLen, const c
 
 	sprintf(buff, ">>clk set to: %2u/%2u/%2u %2u:%2u:%2u\r\n",u8day,u8month,u16year,u8hour, u8minute, u8second);
 	strcat(pcWriteBuffer,buff);
+	LtmRefLocalTime();
 	return pdFALSE;
 }
 static const CLI_Command_Definition_t xclk =

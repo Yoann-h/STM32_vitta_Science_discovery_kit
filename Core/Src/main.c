@@ -38,6 +38,7 @@
 #include "servo.h"
 #include "ws2813.h"
 #include "cli.h"
+#include "local_time_manager.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -63,6 +64,7 @@ uint32_t ledBuffer[WS2813_DMA_BUFFER_SIZE];
 extern ts_buzzer buzzer;
 extern ts_servo servo;
 extern WS2813_HandlerTypeDef ledhandler;
+extern ts_ltm LocalTime;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -116,10 +118,12 @@ int main(void)
   MX_TIM8_Init();
   MX_TIM5_Init();
   MX_SPI3_Init();
+  MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
 
 
   WS2813_eInit(&ledhandler, &htim2, ledBuffer);
+  LtmInit(&htim7);
   //WS2813_eSetColor(&ledhandler,WS2813Orange,0);
 
 //  ts_lcd16x2 lcd;
@@ -320,6 +324,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	  if (htim == &htim5 )
 	  {
 		 buzzer.u8BuzzerTbFlag = 1;
+	  }
+	  if (htim == &htim7 )
+	  {
+		  LocalTime.u32LocalTime++;
 	  }
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM4) {

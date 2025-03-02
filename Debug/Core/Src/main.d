@@ -65,7 +65,9 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/buzzer_cfg.h \
  C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/scores/score_mario.h \
  C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/scores/score_zelda.h \
- C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/scores/score_pokemon.h
+ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/scores/score_pokemon.h \
+ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/ds1307/local_time_manager.h \
+ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/ds1307/DS1307.h
 ../Core/Inc/main.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
@@ -139,3 +141,5 @@ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/
 C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/scores/score_mario.h:
 C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/scores/score_zelda.h:
 C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/scores/score_pokemon.h:
+C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/ds1307/local_time_manager.h:
+C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/ds1307/DS1307.h:

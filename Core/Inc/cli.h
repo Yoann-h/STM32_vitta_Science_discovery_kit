@@ -24,6 +24,7 @@
 #include "buzzer.h"
 #include "scores/scores.h"
 #include "servo.h"
+#include "local_time_manager.h"
 
 //#define BaseType_t uint32_t
 extern osMutexId_t I2CMutexHandle;
