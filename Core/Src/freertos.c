@@ -32,6 +32,7 @@
 #include "tim.h"
 #include "ds1307.h"
 #include "local_time_manager.h"
+#include "sensor_config.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -53,6 +54,7 @@
 /* USER CODE BEGIN Variables */
 ts_lcd16x2 lcd;
 extern ts_ltm LocalTime;
+extern float fSensorValues[SensorCfg_sensorNb];
 /* USER CODE END Variables */
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
@@ -82,6 +84,13 @@ const osThreadAttr_t LedTask_attributes = {
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityLow,
 };
+/* Definitions for SensorTask */
+osThreadId_t SensorTaskHandle;
+const osThreadAttr_t SensorTask_attributes = {
+  .name = "SensorTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityLow,
+};
 /* Definitions for I2CMutex */
 osMutexId_t I2CMutexHandle;
 const osMutexAttr_t I2CMutex_attributes = {
@@ -97,6 +106,7 @@ void StartDefaultTask(void *argument);
 void StartJukeboxTask(void *argument);
 void StartCommandTask(void *argument);
 void StartLedTask(void *argument);
+void StartSensorTask(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -159,6 +169,9 @@ void MX_FREERTOS_Init(void) {
   /* creation of LedTask */
   LedTaskHandle = osThreadNew(StartLedTask, NULL, &LedTask_attributes);
 
+  /* creation of SensorTask */
+  SensorTaskHandle = osThreadNew(StartSensorTask, NULL, &SensorTask_attributes);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
@@ -181,8 +194,7 @@ void StartDefaultTask(void *argument)
   /* USER CODE BEGIN StartDefaultTask */
 	uint8_t strBuffer[40];
 	char datef[20];
-	  ts_hcsr04 ultrasonic_sensor;
-	  hcsr04_init(&ultrasonic_sensor, &htim8, GPIO_PIN_10, GPIOA);
+
 	  //float hcsr04dist = hcsr04_getDistance(&ultrasonic_sensor);
 
 	  lcd.hi2c = &hi2c1;
@@ -194,18 +206,11 @@ void StartDefaultTask(void *argument)
 	  elcd16x2_init(&lcd);
 	  osMutexRelease(I2CMutexHandle);
 	  uint32_t Time_1Hz = HAL_GetTick();
-	  //uint32_t Time_5Hz = HAL_GetTick();
-	  uint32_t Time_2Hz = Time_1Hz;
 	  float hcsr04dist= 0;
 	  LtmRefLocalTime();
   /* Infinite loop */
   for(;;)
   {
-		if(HAL_GetTick()-Time_2Hz>=500)
-		{
-			Time_2Hz = HAL_GetTick();
-			hcsr04dist = hcsr04_getDistance(&ultrasonic_sensor);
-		}
 		if(HAL_GetTick()-Time_1Hz>=1000)
 		{
 			Time_1Hz = HAL_GetTick();
@@ -214,7 +219,7 @@ void StartDefaultTask(void *argument)
 			sRTCDateTime dt;
 			ltm_UnixToDateTime(LocalTime.u32LocalTime, &dt);
 			dateFormat("dmy  H:i:s", dt, datef);
-			sprintf((char*)strBuffer, "dist:%3.1fcm     ",hcsr04dist);
+			sprintf((char*)strBuffer, "dist:%3.1fcm     ",fSensorValues[SensorCfg_dist]);
 			osMutexAcquire(I2CMutexHandle, 100);
 			elcd16x2_writeMsg(&lcd, strBuffer, strlen(strBuffer), 0, LCD16x2_LINE1);
 			elcd16x2_writeMsg(&lcd, datef, strlen(datef), 0, LCD16x2_LINE2);
@@ -280,6 +285,25 @@ void StartLedTask(void *argument)
     osDelay(1);
   }
   /* USER CODE END StartLedTask */
+}
+
+/* USER CODE BEGIN Header_StartSensorTask */
+/**
+* @brief Function implementing the SensorTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartSensorTask */
+void StartSensorTask(void *argument)
+{
+  /* USER CODE BEGIN StartSensorTask */
+	sensorCfg_eProcess();
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END StartSensorTask */
 }
 
 /* Private application code --------------------------------------------------*/
