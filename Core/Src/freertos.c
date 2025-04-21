@@ -33,6 +33,7 @@
 #include "ds1307.h"
 #include "local_time_manager.h"
 #include "sensor_config.h"
+#include "display_manager.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -52,7 +53,6 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-ts_lcd16x2 lcd;
 extern ts_ltm LocalTime;
 extern float fSensorValues[SensorCfg_sensorNb];
 /* USER CODE END Variables */
@@ -91,6 +91,13 @@ const osThreadAttr_t SensorTask_attributes = {
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityLow,
 };
+/* Definitions for LcdTask */
+osThreadId_t LcdTaskHandle;
+const osThreadAttr_t LcdTask_attributes = {
+  .name = "LcdTask",
+  .stack_size = 512 * 4,
+  .priority = (osPriority_t) osPriorityLow,
+};
 /* Definitions for I2CMutex */
 osMutexId_t I2CMutexHandle;
 const osMutexAttr_t I2CMutex_attributes = {
@@ -107,6 +114,7 @@ void StartJukeboxTask(void *argument);
 void StartCommandTask(void *argument);
 void StartLedTask(void *argument);
 void StartSensorTask(void *argument);
+void StartLCDMng(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -172,6 +180,9 @@ void MX_FREERTOS_Init(void) {
   /* creation of SensorTask */
   SensorTaskHandle = osThreadNew(StartSensorTask, NULL, &SensorTask_attributes);
 
+  /* creation of LcdTask */
+  LcdTaskHandle = osThreadNew(StartLCDMng, NULL, &LcdTask_attributes);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
@@ -197,14 +208,14 @@ void StartDefaultTask(void *argument)
 
 	  //float hcsr04dist = hcsr04_getDistance(&ultrasonic_sensor);
 
-	  lcd.hi2c = &hi2c1;
-	  lcd.u8adress = LCD16x2_ADDRESS;
-	  lcd.u8col = 16;
-	  lcd.u8lines = 2;
-	  lcd.u8dotsize=1;
-	  osMutexAcquire(I2CMutexHandle, 1000);
-	  elcd16x2_init(&lcd);
-	  osMutexRelease(I2CMutexHandle);
+//	  lcd.hi2c = &hi2c1;
+//	  lcd.u8adress = LCD16x2_ADDRESS;
+//	  lcd.u8col = 16;
+//	  lcd.u8lines = 2;
+//	  lcd.u8dotsize=1;
+//	  osMutexAcquire(I2CMutexHandle, 1000);
+//	  elcd16x2_init(&lcd);
+//	  osMutexRelease(I2CMutexHandle);
 	  uint32_t Time_1Hz = HAL_GetTick();
 	  float hcsr04dist= 0;
 	  LtmRefLocalTime();
@@ -216,14 +227,14 @@ void StartDefaultTask(void *argument)
 			Time_1Hz = HAL_GetTick();
 
 
-			sRTCDateTime dt;
-			ltm_UnixToDateTime(LocalTime.u32LocalTime, &dt);
-			dateFormat("dmy  H:i:s", dt, datef);
-			sprintf((char*)strBuffer, "dist:%3.1fcm     ",fSensorValues[SensorCfg_dist]);
-			osMutexAcquire(I2CMutexHandle, 100);
-			elcd16x2_writeMsg(&lcd, strBuffer, strlen(strBuffer), 0, LCD16x2_LINE1);
-			elcd16x2_writeMsg(&lcd, datef, strlen(datef), 0, LCD16x2_LINE2);
-			osMutexRelease(I2CMutexHandle);
+//			sRTCDateTime dt;
+//			ltm_UnixToDateTime(LocalTime.u32LocalTime, &dt);
+//			dateFormat("dmy  H:i:s", dt, datef);
+//			sprintf((char*)strBuffer, "dist:%3.1fcm     ",fSensorValues[SensorCfg_dist]);
+//			osMutexAcquire(I2CMutexHandle, 100);
+//			elcd16x2_writeMsg(&lcd, strBuffer, strlen(strBuffer), 0, LCD16x2_LINE1);
+//			elcd16x2_writeMsg(&lcd, datef, strlen(datef), 0, LCD16x2_LINE2);
+//			osMutexRelease(I2CMutexHandle);
 		}
     osDelay(1);
   }
@@ -304,6 +315,25 @@ void StartSensorTask(void *argument)
     osDelay(1);
   }
   /* USER CODE END StartSensorTask */
+}
+
+/* USER CODE BEGIN Header_StartLCDMng */
+/**
+* @brief Function implementing the LcdTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartLCDMng */
+void StartLCDMng(void *argument)
+{
+  /* USER CODE BEGIN StartLCDMng */
+  DispMng_eProcess(&hi2c1);
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END StartLCDMng */
 }
 
 /* Private application code --------------------------------------------------*/

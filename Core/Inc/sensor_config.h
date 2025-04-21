@@ -36,7 +36,7 @@ typedef struct {
 	char* unit;
 } SensorStr;
 
-static SensorStr eSensorList[SensorCfg_sensorNb]={
+static const SensorStr eSensorList[SensorCfg_sensorNb]={
 		{"Distance", "dist","cm"},
 		{"Luminosity","lum","V"},
 		{"Humidity","hty",""},
@@ -44,5 +44,6 @@ static SensorStr eSensorList[SensorCfg_sensorNb]={
 };
 
 void sensorCfg_eProcess(void);
+void sensorCfg_eGenerateString(SensorList sId, char* cSensorString);
 
 #endif /* INC_SENSOR_CONFIG_H_ */

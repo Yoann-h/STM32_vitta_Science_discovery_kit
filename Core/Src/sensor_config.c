@@ -60,3 +60,28 @@ void sensorCfg_eProcess(void)
 		osDelay(100);
 	}
 }
+
+void sensorCfg_eGenerateString(SensorList sId, char* cSensorString)
+{
+	char strBuffer[17] = "";
+	char cValStr[16];
+	strcat(strBuffer, eSensorList[sId].lcdStr);
+	switch( sId)
+	{
+	case SensorCfg_dist:
+		sprintf(cValStr, ":%3.1f", fSensorValues[sId]);
+		break;
+	case SensorCfg_lum:
+		sprintf(cValStr, ":%4.0f", fSensorValues[sId]);
+		break;
+	case SensorCfg_moist:
+		sprintf(cValStr, ":%4.0f", fSensorValues[sId]);
+		break;
+	case SensorCfg_temp:
+		sprintf(cValStr, ":%2.1f", fSensorValues[sId]);
+		break;
+	}
+	strcat(strBuffer, cValStr);
+	strcat(strBuffer, eSensorList[sId].unit);
+	memcpy(cSensorString, strBuffer, 16);
+}

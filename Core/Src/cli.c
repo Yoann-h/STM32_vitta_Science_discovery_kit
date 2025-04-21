@@ -18,6 +18,7 @@ extern uint8_t song;
 extern WS2813_HandlerTypeDef ledhandler;
 extern ts_servo servo;
 extern uint8_t u8WS2813_iCommand;
+extern uint8_t u8DispMng_Mode;
 
 void vCommandConsoleTask(void *pvParameters)
 {
@@ -437,6 +438,57 @@ static const CLI_Command_Definition_t xTaskStats =
 	prvTaskStatsCommand, /* The function to run. */
 	0 /* No parameters are expected. */
 };
+
+static BaseType_t cmd_selectLCDMode(int8_t *pcWriteBuffer, size_t xWriteBufferLen, const int8_t *pcCommandString);
+
+static BaseType_t cmd_selectLCDMode(int8_t *pcWriteBuffer, size_t xWriteBufferLen, const int8_t *pcCommandString)
+{
+	char buff[30];
+	char *pcParameter1;
+	const char const okMessage[20];
+	BaseType_t xParameter1StringLength, xResult;
+
+	pcParameter1 = FreeRTOS_CLIGetParameter
+	                        (
+	                          /* The command string itself. */
+	                          pcCommandString,
+	                          /* Return the first parameter. */
+	                          1,
+	                          /* Store the parameter string length. */
+	                          &xParameter1StringLength
+	                        );
+	pcParameter1[ xParameter1StringLength ] = 0x00;
+	if(strcmp(pcParameter1, "0")==0)
+	{
+		u8DispMng_Mode = 0;
+	}
+	else if (strcmp(pcParameter1, "1")==0)
+	{
+		u8DispMng_Mode = 1;
+	}
+	else if (strcmp(pcParameter1, "2")==0)
+	{
+		u8DispMng_Mode = 2;
+	}
+	else if (strcmp(pcParameter1, "3")==0)
+	{
+		u8DispMng_Mode = 3;
+	}
+	else
+	{
+		u8DispMng_Mode = 0;
+	}
+	sprintf(buff, ">>lcd mode set to: %u\r\n",u8DispMng_Mode);
+	strcat(pcWriteBuffer,buff);
+	return pdFALSE;
+}
+static const CLI_Command_Definition_t xSetLCDMode =
+{
+	"lcdmode", /* The command string to type. */
+	"lcdmode:\r\n Select current display mode\r\n\r\n",
+	cmd_selectLCDMode, /* The function to run. */
+	1 /* One parameter expected. */
+};
 /******************************************************************************************************/
 
 void vRegisterCLICommands(void)
@@ -447,6 +499,7 @@ void vRegisterCLICommands(void)
     FreeRTOS_CLIRegisterCommand(&xTaskStats);
     FreeRTOS_CLIRegisterCommand(&xclk);
     FreeRTOS_CLIRegisterCommand(&xCmdServo);
+    FreeRTOS_CLIRegisterCommand(&xSetLCDMode);
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
