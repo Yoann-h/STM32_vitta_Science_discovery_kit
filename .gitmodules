@@ -16,3 +16,6 @@
 [submodule "modules/ds1307"]
 	path = modules/ds1307
 	url = https://github.com/Yoann-h/STM32_ds1307.git
+[submodule "STM32_fsmng"]
+	path = modules/fileSystem
+	url = https://github.com/Yoann-h/STM32_fsmng.git

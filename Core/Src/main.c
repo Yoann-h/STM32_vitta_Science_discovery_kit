@@ -39,6 +39,7 @@
 #include "ws2813.h"
 #include "cli.h"
 #include "local_time_manager.h"
+#include "fs_mng.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -120,7 +121,7 @@ int main(void)
   MX_SPI3_Init();
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
-
+  MX_FATFS_Init();
 
   WS2813_eInit(&ledhandler, &htim2, ledBuffer);
   LtmInit(&htim7);
@@ -156,6 +157,9 @@ int main(void)
 
   DS1307Init(&hi2c1);
 
+  fs_mng_Init();
+  //LtmRefLocalTime();
+  //CSVLoggerMng_test(&huart2);
   /* USER CODE END 2 */
 
   /* Init scheduler */

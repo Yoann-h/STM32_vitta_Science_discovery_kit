@@ -1,6 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (12.3.rel1)
+# Toolchain: GNU Tools for STM32 (13.3.rel1)
 ################################################################################
 
 ELF_SRCS := 
@@ -32,6 +32,13 @@ Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F \
 Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang \
 modules/buzzer \
 modules/ds1307 \
+modules/fileSystem/FatFs/App \
+modules/fileSystem/FatFs/Target \
+modules/fileSystem/FatFs/src \
+modules/fileSystem/FatFs/src/option \
+modules/fileSystem \
+modules/fileSystem/littlefs \
+modules/fileSystem/sdcard \
 modules/hcsr04 \
 modules/lcd16x2 \
 modules/servo \
