@@ -19,6 +19,7 @@ extern WS2813_HandlerTypeDef ledhandler;
 extern ts_servo servo;
 extern uint8_t u8WS2813_iCommand;
 extern uint8_t u8DispMng_Mode;
+extern uint8_t u8EnableCSV;
 
 void vCommandConsoleTask(void *pvParameters)
 {
@@ -260,7 +261,7 @@ static BaseType_t CmdServo( char *pcWriteBuffer, size_t xWriteBufferLen, const c
 }
 static const CLI_Command_Definition_t xCmdServo = {
     "servo",                               // command to type
-    "servo :\r\n <angle>: [0:180]\r\n", // help string
+    "servo <angle>: [0:180]\r\n", // help string
 	CmdServo,                             // command handler
     1                                   // num of pasrameters to expect
 };
@@ -326,7 +327,7 @@ static BaseType_t cmd_buzzer(int8_t *pcWriteBuffer, size_t xWriteBufferLen, cons
 
 static const CLI_Command_Definition_t xCmdBuzzer = {
     "buzzer",                               // command to type
-    "buzzer :\r\n <song>: zelda, mario\r\n", // help string
+    "buzzer <song>: zelda, mario\r\n", // help string
 	cmd_buzzer,                             // command handler
     1                                   // num of pasrameters to expect
 };
@@ -391,7 +392,7 @@ static BaseType_t CmdClock( char *pcWriteBuffer, size_t xWriteBufferLen, const c
 static const CLI_Command_Definition_t xclk =
 {
 	"rtc", /* The command string to type. */
-	"rtc <ddmmyy> <hhmmss>:\r\n set the rtc to the indicated date and time\r\n\r\n",
+	"rtc <ddmmyy> <hhmmss>: set the rtc to the indicated date and time\r\n\r\n",
 	CmdClock, /* The function to run. */
 	2 /* 2 parameters are expected. */
 };
@@ -434,7 +435,7 @@ a table that gives information on each task in the system. */
 static const CLI_Command_Definition_t xTaskStats =
 {
 	"task-stats", /* The command string to type. */
-	"task-stats:\r\n Displays a table showing the state of each FreeRTOS task\r\n\r\n",
+	"task-stats: Displays a table showing the state of each FreeRTOS task\r\n\r\n",
 	prvTaskStatsCommand, /* The function to run. */
 	0 /* No parameters are expected. */
 };
@@ -489,6 +490,48 @@ static const CLI_Command_Definition_t xSetLCDMode =
 	cmd_selectLCDMode, /* The function to run. */
 	1 /* One parameter expected. */
 };
+
+static BaseType_t cmd_mdeCSV(int8_t *pcWriteBuffer, size_t xWriteBufferLen, const int8_t *pcCommandString);
+static BaseType_t cmd_mdeCSV(int8_t *pcWriteBuffer, size_t xWriteBufferLen, const int8_t *pcCommandString)
+{
+	char buff[30];
+	char *pcParameter1;
+	const char const okMessage[20];
+	BaseType_t xParameter1StringLength, xResult;
+	pcParameter1 = FreeRTOS_CLIGetParameter
+		             (
+		                 /* The command string itself. */
+		                  pcCommandString,
+		                  /* Return the first parameter. */
+		                  1,
+		                  /* Store the parameter string length. */
+		                  &xParameter1StringLength
+		            );
+	pcParameter1[ xParameter1StringLength ] = 0x00;
+	if(strcmp(pcParameter1, "0")==0)
+	{
+		u8EnableCSV = 0;
+	}
+	else if (strcmp(pcParameter1, "1")==0)
+	{
+		u8EnableCSV = 1;
+	}
+	else if (strcmp(pcParameter1, "2")==0)
+	{
+		u8EnableCSV = 0;
+		char cBuf[128];
+		CSVLoggerMng_PrintLog(cBuf, 128, &huart2);
+	}
+	sprintf(buff, ">>csv mode set to: %u\r\n",u8EnableCSV);
+	return pdFALSE;
+}
+static const CLI_Command_Definition_t xSetCSVMode =
+{
+	"CSVMode", /* The command string to type. */
+	"CSVMode <mode> Enable CSV recording: 0 = disable, 1 = enable, 2 = print file\r\n\r\n",
+	cmd_mdeCSV, /* The function to run. */
+	1 /* One parameter expected. */
+};
 /******************************************************************************************************/
 
 void vRegisterCLICommands(void)
@@ -500,6 +543,7 @@ void vRegisterCLICommands(void)
     FreeRTOS_CLIRegisterCommand(&xclk);
     FreeRTOS_CLIRegisterCommand(&xCmdServo);
     FreeRTOS_CLIRegisterCommand(&xSetLCDMode);
+    FreeRTOS_CLIRegisterCommand(&xSetCSVMode);
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)

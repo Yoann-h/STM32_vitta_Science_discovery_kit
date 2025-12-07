@@ -21,6 +21,7 @@ typedef enum {
 typedef enum {
 	SensorCfg_dist, SensorCfg_lum, SensorCfg_moist, SensorCfg_temp, SensorCfg_sensorNb
 } SensorList;
+extern float fSensorValues[SensorCfg_sensorNb];
 
 typedef enum
 {

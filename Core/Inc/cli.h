@@ -25,6 +25,7 @@
 #include "scores/scores.h"
 #include "servo.h"
 #include "local_time_manager.h"
+#include "csv_logger_mng.h"
 
 //#define BaseType_t uint32_t
 extern osMutexId_t I2CMutexHandle;

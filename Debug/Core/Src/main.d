@@ -16,6 +16,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma.h \
+ ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_dma.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_cortex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_adc.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_adc.h \
@@ -68,6 +69,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/scores/score_pokemon.h \
  C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/ds1307/local_time_manager.h \
  C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/ds1307/DS1307.h \
+ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/csv_logger_mng.h \
+ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/csv_logger_cfg.h \
  C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/fs_mng.h \
  C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/FatFs/App/fatfs.h \
  C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/FatFs/src/ff.h \
@@ -76,7 +79,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/FatFs/src/ff_gen_drv.h \
  C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/FatFs/src/diskio.h \
  C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/FatFs/src/ff.h \
- C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/FatFs/Target/user_diskio.h
+ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/FatFs/Target/user_diskio.h \
+ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/fs_mng.h
 ../Core/Inc/main.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
@@ -95,6 +99,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio_ex.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma.h:
+../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_dma.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_cortex.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_adc.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_adc.h:
@@ -152,6 +157,8 @@ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/
 C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/buzzer/scores/score_pokemon.h:
 C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/ds1307/local_time_manager.h:
 C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/ds1307/DS1307.h:
+C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/csv_logger_mng.h:
+C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/csv_logger_cfg.h:
 C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/fs_mng.h:
 C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/FatFs/App/fatfs.h:
 C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/FatFs/src/ff.h:
@@ -161,3 +168,4 @@ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSys
 C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/FatFs/src/diskio.h:
 C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/FatFs/src/ff.h:
 C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/FatFs/Target/user_diskio.h:
+C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/fs_mng.h:

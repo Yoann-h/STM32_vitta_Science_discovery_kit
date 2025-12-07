@@ -34,6 +34,7 @@
 #include "local_time_manager.h"
 #include "sensor_config.h"
 #include "display_manager.h"
+#include "csv_logger_mng.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -55,6 +56,7 @@
 /* USER CODE BEGIN Variables */
 extern ts_ltm LocalTime;
 extern float fSensorValues[SensorCfg_sensorNb];
+extern uint8_t u8EnableCSV;
 /* USER CODE END Variables */
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
@@ -206,7 +208,7 @@ void StartDefaultTask(void *argument)
 	uint8_t strBuffer[40];
 	char datef[20];
 
-	  //float hcsr04dist = hcsr04_getDistance(&ultrasonic_sensor);
+//   float hcsr04dist = hcsr04_getDistance(&ultrasonic_sensor);
 
 //	  lcd.hi2c = &hi2c1;
 //	  lcd.u8adress = LCD16x2_ADDRESS;
@@ -219,9 +221,38 @@ void StartDefaultTask(void *argument)
 	  uint32_t Time_1Hz = HAL_GetTick();
 	  float hcsr04dist= 0;
 	  LtmRefLocalTime();
+
+
+	ts_DataLog eData={eSensorList[SensorCfg_dist].header,eSensorList[SensorCfg_dist].unit,&fSensorValues[SensorCfg_dist],2};
+	CSVLoggerMng_AddData(&eData);
+	eData.pcDataName=eSensorList[SensorCfg_temp].header;
+	eData.pcUnit    =eSensorList[SensorCfg_temp].unit;
+	eData.pvDataVal=&fSensorValues[SensorCfg_temp];
+	eData.u8Digitnb=0;
+	CSVLoggerMng_AddData(&eData);
+	eData.pcDataName=eSensorList[SensorCfg_lum].header;
+	eData.pcUnit    =eSensorList[SensorCfg_lum].unit;
+	eData.pvDataVal=&fSensorValues[SensorCfg_lum];
+	eData.u8Digitnb=0;
+	CSVLoggerMng_AddData(&eData);
+	eData.pcDataName=eSensorList[SensorCfg_moist].header;
+	eData.pcUnit    =eSensorList[SensorCfg_moist].unit;
+	eData.pvDataVal=&fSensorValues[SensorCfg_moist];
+	eData.u8Digitnb=1;
+	CSVLoggerMng_AddData(&eData);
+	CSVLoggerMng_Init(';', 1);
+	uint32_t LastRecTime=0;
+	uint32_t u32PeriodMs = 1000/iLogFrequency;
+
+
   /* Infinite loop */
   for(;;)
   {
+	  if(u8EnableCSV==1 && (LocalTime.u32LocalTime-LastRecTime>=u32PeriodMs/1000))
+	  {
+		  LastRecTime = LocalTime.u32LocalTime;
+		  CSVLoggerMng_Record();
+	  }
 		if(HAL_GetTick()-Time_1Hz>=1000)
 		{
 			Time_1Hz = HAL_GetTick();
