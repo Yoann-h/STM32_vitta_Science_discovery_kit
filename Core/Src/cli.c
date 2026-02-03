@@ -133,7 +133,7 @@ static BaseType_t cmd_ok(int8_t *pcWriteBuffer, size_t xWriteBufferLen, const in
 
 static const CLI_Command_Definition_t xCmdOK = {
     "ok",                               // command to type
-    "ok :\r\n Shows an OK message\r\n", // help string
+    "ok : Shows an OK message\r\n", // help string
     cmd_ok,                             // command handler
     0                                   // num of pasrameters to expect
 };
@@ -221,7 +221,7 @@ static BaseType_t cmd_led(int8_t *pcWriteBuffer, size_t xWriteBufferLen, const i
 
 static const CLI_Command_Definition_t xCmdLed = {
     "led",                               // command to type
-    "led :\r\n <color>: red, blue, green...\r\n", // help string
+    "led <color>: red, blue, green...\r\n", // help string
 	cmd_led,                             // command handler
     1                                   // num of pasrameters to expect
 };
@@ -327,7 +327,7 @@ static BaseType_t cmd_buzzer(int8_t *pcWriteBuffer, size_t xWriteBufferLen, cons
 
 static const CLI_Command_Definition_t xCmdBuzzer = {
     "buzzer",                               // command to type
-    "buzzer <song>: zelda, mario\r\n", // help string
+    "buzzer <song>: zelda, mario, pokemon\r\n", // help string
 	cmd_buzzer,                             // command handler
     1                                   // num of pasrameters to expect
 };
@@ -392,7 +392,7 @@ static BaseType_t CmdClock( char *pcWriteBuffer, size_t xWriteBufferLen, const c
 static const CLI_Command_Definition_t xclk =
 {
 	"rtc", /* The command string to type. */
-	"rtc <ddmmyy> <hhmmss>: set the rtc to the indicated date and time\r\n\r\n",
+	"rtc <ddmmyy> <hhmmss>: set the rtc to the indicated date and time\r\n",
 	CmdClock, /* The function to run. */
 	2 /* 2 parameters are expected. */
 };
@@ -435,7 +435,7 @@ a table that gives information on each task in the system. */
 static const CLI_Command_Definition_t xTaskStats =
 {
 	"task-stats", /* The command string to type. */
-	"task-stats: Displays a table showing the state of each FreeRTOS task\r\n\r\n",
+	"task-stats: Displays a table showing the state of each FreeRTOS task\r\n",
 	prvTaskStatsCommand, /* The function to run. */
 	0 /* No parameters are expected. */
 };
@@ -486,7 +486,7 @@ static BaseType_t cmd_selectLCDMode(int8_t *pcWriteBuffer, size_t xWriteBufferLe
 static const CLI_Command_Definition_t xSetLCDMode =
 {
 	"lcdmode", /* The command string to type. */
-	"lcdmode:\r\n Select current display mode\r\n\r\n",
+	"lcdmode <mode>: [0:3] Select current display mode\r\n",
 	cmd_selectLCDMode, /* The function to run. */
 	1 /* One parameter expected. */
 };
@@ -528,12 +528,39 @@ static BaseType_t cmd_mdeCSV(int8_t *pcWriteBuffer, size_t xWriteBufferLen, cons
 static const CLI_Command_Definition_t xSetCSVMode =
 {
 	"CSVMode", /* The command string to type. */
-	"CSVMode <mode> Enable CSV recording: 0 = disable, 1 = enable, 2 = print file\r\n\r\n",
+	"CSVMode <mode>: Enable CSV recording (0 = disable, 1 = enable, 2 = print file)\r\n",
 	cmd_mdeCSV, /* The function to run. */
 	1 /* One parameter expected. */
 };
 /******************************************************************************************************/
+/******************************************************************************************************/
+//sdcard content display
+static BaseType_t cmd_sdcard(int8_t *pcWriteBuffer, size_t xWriteBufferLen, const int8_t *pcCommandString);
 
+static BaseType_t cmd_sdcard(int8_t *pcWriteBuffer, size_t xWriteBufferLen, const int8_t *pcCommandString)
+{
+	char *pcParameter1;
+	BaseType_t xParameter1StringLength, xResult;
+	pcParameter1 = FreeRTOS_CLIGetParameter(
+		                          /* The command string itself. */
+		                          pcCommandString,
+		                          /* Return the first parameter. */
+		                          1,
+		                          /* Store the parameter string length. */
+		                          &xParameter1StringLength
+		                        );
+	pcParameter1[ xParameter1StringLength ] = 0x00;
+	fs_mng_dispDirectory(pcParameter1, pcWriteBuffer, MAX_OUTPUT_LENGTH);
+	return pdFALSE;
+}
+static const CLI_Command_Definition_t xDispSDCard =
+{
+	"sdcard", /* The command string to type. */
+	"sdcard <path>: display folder content\r\n",
+	cmd_sdcard, /* The function to run. */
+	1 /* one parameter expected. */
+};
+/******************************************************************************************************/
 void vRegisterCLICommands(void)
 {
     FreeRTOS_CLIRegisterCommand(&xCmdOK);
@@ -544,6 +571,7 @@ void vRegisterCLICommands(void)
     FreeRTOS_CLIRegisterCommand(&xCmdServo);
     FreeRTOS_CLIRegisterCommand(&xSetLCDMode);
     FreeRTOS_CLIRegisterCommand(&xSetCSVMode);
+    FreeRTOS_CLIRegisterCommand(&xDispSDCard);
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)

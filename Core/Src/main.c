@@ -160,6 +160,23 @@ int main(void)
   fs_mng_Init();
   //LtmRefLocalTime();
   //CSVLoggerMng_test(&huart2);
+  fs_mng_createDir("/scores");
+  char mariofile[]="/scores/mario.sco";
+  char zeldafile[]="/scores/zelda.sco";
+  char pokemonfile[]="/scores/pokemon.sco";
+
+  if(fs_mng_fileExist(mariofile)==FSMng_INTERNAL_ERROR)
+  {
+	  fs_mng_writeFile(mariofile, (void*)mario, sizeof(mario), FSMng_NewFile);
+  }
+  if(fs_mng_fileExist(zeldafile)==FSMng_INTERNAL_ERROR)
+  {
+	  fs_mng_writeFile(zeldafile, (void*)zelda, sizeof(zelda), FSMng_NewFile);
+  }
+  if(fs_mng_fileExist(pokemonfile)==FSMng_INTERNAL_ERROR)
+  {
+	  fs_mng_writeFile(pokemonfile, (void*)pokemon, sizeof(pokemon), FSMng_NewFile);
+  }
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -175,9 +192,6 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
-
-
 
 
 //  int min_pwm=600; //us

@@ -69,16 +69,16 @@ void sensorCfg_eGenerateString(SensorList sId, char* cSensorString)
 	switch( sId)
 	{
 	case SensorCfg_dist:
-		sprintf(cValStr, ":%3.1f", fSensorValues[sId]);
+		sprintf(cValStr, ":%03.1f", fSensorValues[sId]);
 		break;
 	case SensorCfg_lum:
-		sprintf(cValStr, ":%4.0f", fSensorValues[sId]);
+		sprintf(cValStr, ":%04.0f", fSensorValues[sId]);
 		break;
 	case SensorCfg_moist:
-		sprintf(cValStr, ":%4.0f", fSensorValues[sId]);
+		sprintf(cValStr, ":%04.0f", fSensorValues[sId]);
 		break;
 	case SensorCfg_temp:
-		sprintf(cValStr, ":%2.1f", fSensorValues[sId]);
+		sprintf(cValStr, ":%02.1f", fSensorValues[sId]);
 		break;
 	}
 	strcat(strBuffer, cValStr);
