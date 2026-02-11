@@ -164,18 +164,24 @@ int main(void)
   char mariofile[]="/scores/mario.sco";
   char zeldafile[]="/scores/zelda.sco";
   char pokemonfile[]="/scores/pokemon.sco";
-
-  if(fs_mng_fileExist(mariofile)==FSMng_INTERNAL_ERROR)
+  uint32_t fsize=0;
+  if(fs_mng_fileExist(mariofile,&fsize)==FSMng_INTERNAL_ERROR)
   {
+#ifdef BUZZER_MARIO
 	  fs_mng_writeFile(mariofile, (void*)mario, sizeof(mario), FSMng_NewFile);
+#endif
   }
-  if(fs_mng_fileExist(zeldafile)==FSMng_INTERNAL_ERROR)
+  if(fs_mng_fileExist(zeldafile,&fsize)==FSMng_INTERNAL_ERROR)
   {
+#ifdef BUZZER_ZELDA
 	  fs_mng_writeFile(zeldafile, (void*)zelda, sizeof(zelda), FSMng_NewFile);
+#endif
   }
-  if(fs_mng_fileExist(pokemonfile)==FSMng_INTERNAL_ERROR)
+  if(fs_mng_fileExist(pokemonfile,&fsize)==FSMng_INTERNAL_ERROR)
   {
+#ifdef BUZZER_POKEMON
 	  fs_mng_writeFile(pokemonfile, (void*)pokemon, sizeof(pokemon), FSMng_NewFile);
+#endif
   }
   /* USER CODE END 2 */
 
