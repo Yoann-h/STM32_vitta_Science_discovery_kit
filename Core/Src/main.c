@@ -120,6 +120,8 @@ int main(void)
   MX_TIM5_Init();
   MX_SPI3_Init();
   MX_TIM7_Init();
+  MX_USART1_UART_Init();
+  MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
   MX_FATFS_Init();
 

@@ -19,3 +19,6 @@
 [submodule "STM32_fsmng"]
 	path = modules/fileSystem
 	url = https://github.com/Yoann-h/STM32_fsmng.git
+[submodule "modules/gnss"]
+	path = modules/gnss
+	url = https://github.com/Yoann-h/STM32_gnss.git
