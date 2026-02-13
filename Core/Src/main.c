@@ -40,6 +40,7 @@
 #include "cli.h"
 #include "local_time_manager.h"
 #include "fs_mng.h"
+#include "gnss.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -66,6 +67,7 @@ extern ts_buzzer buzzer;
 extern ts_servo servo;
 extern WS2813_HandlerTypeDef ledhandler;
 extern ts_ltm LocalTime;
+extern GNSS_Handler GNSS_Handle;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -158,6 +160,8 @@ int main(void)
   //buzzer_vDemoTask(&buzzer);
 
   DS1307Init(&hi2c1);
+
+  gnss_init(&GNSS_Handle, &huart1);
 
   fs_mng_Init();
   //LtmRefLocalTime();

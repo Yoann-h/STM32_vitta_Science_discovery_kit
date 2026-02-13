@@ -77,7 +77,10 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/ds1307/DS1307.h \
  C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/csv_logger_mng.h \
  C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/csv_logger_cfg.h \
- C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/fs_mng.h
+ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/fs_mng.h \
+ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/gnss/gnss.h \
+ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/gnss/gnss_cfg.h \
+ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/gnss/resources/minmea/minmea.h
 ../Core/Inc/main.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
@@ -163,3 +166,6 @@ C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/ds1307/
 C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/csv_logger_mng.h:
 C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/csv_logger_cfg.h:
 C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/fileSystem/fs_mng.h:
+C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/gnss/gnss.h:
+C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/gnss/gnss_cfg.h:
+C:/Users/yoyos/STM32CubeIDE/workspace_github/vita_science_kit_v2/modules/gnss/resources/minmea/minmea.h:

@@ -39,6 +39,8 @@ modules/fileSystem/FatFs/src/option \
 modules/fileSystem \
 modules/fileSystem/littlefs \
 modules/fileSystem/sdcard \
+modules/gnss \
+modules/gnss/resources/minmea \
 modules/hcsr04 \
 modules/lcd16x2 \
 modules/servo \
